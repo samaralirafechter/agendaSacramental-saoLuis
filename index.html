@@ -1,71 +1,127 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Ramo 5 · CTM — Reunião Sacramental</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ramo 5 · CTM — Reunião Sacramental</title>
 
-    <link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
 <div class="rs-app">
-  <div class="rs-header">
-    <h1>Ramo 5 &middot; CTM</h1>
-    <p>Reunião Sacramental</p>
-    <div class="rs-status connecting" id="conn-status">Conectando ao banco de dados…</div>
-  </div>
-
-  <div class="rs-tabs">
-    <div class="rs-tab active" data-tab="form">Preencher</div>
-    <div class="rs-tab" data-tab="history">Histórico</div>
-  </div>
-
-  <div id="rs-view-form">
-    <div class="rs-field">
-      <label>Data da Reunião</label>
-      <input type="date" id="f-date" />
+    <div class="rs-header">
+        <h1>Ala Jd. São Luís &middot; Santo Amaro</h1>
+        <p>Reunião Sacramental</p>
+        <div class="rs-status connecting" id="conn-status">Conectando ao banco de dados…</div>
     </div>
 
-    <div class="rs-section-title">Abertura</div>
-    <div class="rs-field"><label>Prelúdio musical</label><input type="text" id="f-preludio" placeholder="Quem toca" /></div>
-    <div class="rs-row2">
-      <div class="rs-field"><label>Dirigido Por:</label><input type="text" id="f-dirigido" placeholder="Nome" /></div>
-      <div class="rs-field"><label>Presidido Por:</label><input type="text" id="f-presidido" placeholder="Nome" /></div>
+    <div class="rs-tabs">
+        <div class="rs-tab active" data-tab="form">Preencher</div>
+        <div class="rs-tab" data-tab="history">Histórico</div>
     </div>
-    <div class="rs-field"><label>Regente:</label><input type="text" id="f-regente" placeholder="Nome" /></div>
-    <div class="rs-field"><label>Reconhecimentos:</label><input type="text" id="f-reconhecimentos" placeholder="Autoridades ou visitantes, se houver" /></div>
-    <div class="rs-field"><label>Anúncios:</label><textarea id="f-anuncios" placeholder="Resumo dos anúncios"></textarea></div>
-    <div class="rs-field"><label>Hino de Abertura:</label><input type="text" id="f-hino-abertura" placeholder="Nº e nome do hino" /></div>
-    <div class="rs-field"><label>Oração de Abertura:</label><input type="text" id="f-oracao-abertura" placeholder="Nome" /></div>
-    <div class="rs-field"><label>Hino sacramental:</label><input type="text" id="f-hino-sacramental" placeholder="Nº e nome do hino" /></div>
 
-    <div class="rs-section-title">Discursos e Número Musical</div>
-    <div id="f-discursos-1a4"></div>
-    <div class="rs-field"><label>Número musical especial</label><input type="text" id="f-numero-musical" placeholder="Quem e o quê" /></div>
-    <div id="f-discurso-5"></div>
+    <div id="rs-view-form">
+        <div class="rs-field">
+            <label>Data da Reunião</label>
+            <input type="date" id="f-date" />
+        </div>
 
-    <div class="rs-section-title">Encerramento</div>
-    <div class="rs-field"><label>Hino de Encerramento:</label><input type="text" id="f-hino-encerramento" placeholder="Nº e nome do hino" /></div>
-    <div class="rs-field"><label>Oração de Encerramento:</label><input type="text" id="f-oracao-encerramento" placeholder="Nome" /></div>
+        <div class="rs-field">
+            <label>Tipo de Reunião</label>
 
-    <div class="rs-btnbar">
-      <button class="rs-btn" id="btn-clear">Limpar formulário</button>
-      <button class="rs-btn primary" id="btn-save">Salvar reunião</button>
+            <div class="rs-tipo-reuniao">
+                <label>
+                    <input type="radio" name="tipo-reuniao" value="normal" checked>
+                    Reunião Sacramental
+                </label>
+
+                <label>
+                    <input type="radio" name="tipo-reuniao" value="testemunho">
+                    Reunião de Testemunho
+                </label>
+            </div>
+        </div>
+
+        <div class="rs-section-title">Abertura</div>
+        <div class="rs-row2">
+            <div class="rs-field">
+                <label>Dirigido Por:</label><input type="text" id="f-dirigido" placeholder="Nome" />
+            </div>
+            <div class="rs-field">
+                <label>Presidido Por:</label><input type="text" id="f-presidido" placeholder="Nome" />
+            </div>
+        </div>
+        <div class="rs-field">
+            <label>Pianista</label><input type="text" id="f-pianista" placeholder="Nome" />
+        </div>
+        <div class="rs-field">
+            <label>Regente:</label><input type="text" id="f-regente" placeholder="Nome" />
+        </div>
+        <div class="rs-field">
+            <label>Reconhecimentos:</label
+            ><input type="text" id="f-reconhecimentos" placeholder="Autoridades ou visitantes, se houver" />
+        </div>
+        <div class="rs-field">
+            <label>Anúncios:</label><textarea id="f-anuncios" placeholder="Atividades..."></textarea>
+        </div>
+        <div class="rs-field">
+            <label>Chamados e Desobrigações:</label><textarea id="f-chamados" placeholder="Nome e chamado"></textarea>
+        </div>
+        <div class="rs-field">
+            <label>Hino de Abertura:</label
+            ><input type="text" id="f-hino-abertura" placeholder="Nº e nome do hino" />
+        </div>
+        <div class="rs-field">
+            <label>Oração de Abertura:</label><input type="text" id="f-oracao-abertura" placeholder="Nome" />
+        </div>
+        <div class="rs-field">
+            <label>Hino sacramental:</label
+            ><input type="text" id="f-hino-sacramental" placeholder="Nº e nome do hino" />
+        </div>
+
+        <div id="bloco-discursos">
+            <div class="rs-section-title">Discursos</div>
+
+            <div id="f-discursos"></div>
+
+        </div>
+
+        <div id="bloco-testemunhos" style="display: none;">
+            <div class="rs-section-title">Testemunhos</div>
+
+            <div class="rs-field">
+                <label>Testemunhos:</label>
+                <textarea
+                        id="f-testemunhos"
+                        placeholder="Digite os nomes dos membros que prestaram testemunho, um por linha..."
+                ></textarea>
+            </div>
+        </div>
+
+        <div class="rs-section-title">Encerramento</div>
+        <div class="rs-field">
+            <label>Hino de Encerramento:</label
+            ><input type="text" id="f-hino-encerramento" placeholder="Nº e nome do hino" />
+        </div>
+        <div class="rs-field">
+            <label>Oração de Encerramento:</label
+            ><input type="text" id="f-oracao-encerramento" placeholder="Nome" />
+        </div>
+
+        <div class="rs-btnbar">
+            <button class="rs-btn" id="btn-clear">Limpar formulário</button>
+            <button class="rs-btn primary" id="btn-save">Salvar reunião</button>
+        </div>
+        <div class="rs-msg" id="f-msg"></div>
     </div>
-    <div class="rs-msg" id="f-msg"></div>
-  </div>
 
-  <div id="rs-view-history" style="display:none;">
-    <div id="hist-list"><div class="rs-loading">Carregando histórico…</div></div>
-  </div>
+    <div id="rs-view-history" style="display: none">
+        <div id="hist-list"><div class="rs-loading">Carregando histórico…</div></div>
+    </div>
 </div>
 
-<!-- Firebase SDK (compat, via CDN) -->
-<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="module" src="script.js"></script>
 
-<script src="script.js"></script>
 </body>
 </html>

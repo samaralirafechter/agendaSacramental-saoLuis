@@ -1,56 +1,520 @@
+:root {
+    --rs-navy: #1F3A5F;
+    --rs-gold: #B8923F;
+    --rs-gold-light: #F3E9D2;
+    --rs-cream: #FBFAF7;
+    --rs-line: #E2DED4;
+    --rs-ink: #2A2A28;
+    --rs-ink-soft: #6B685F;
+}
 
-  :root {
-    --rs-navy: #1F3A5F; --rs-gold: #B8923F; --rs-gold-light: #F3E9D2;
-    --rs-cream: #FBFAF7; --rs-line: #E2DED4; --rs-ink: #2A2A28; --rs-ink-soft: #6B685F;
-  }
-  * { box-sizing: border-box; }
-  body { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; color: var(--rs-ink); background:#fff; margin:0; padding:20px 14px 60px; }
-  .rs-app { max-width: 720px; margin: 0 auto; }
-  .rs-header { text-align: center; padding: 0 0 20px; border-bottom: 2px solid var(--rs-gold); margin-bottom: 24px; }
-  .rs-header h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: 24px; color: var(--rs-navy); margin: 0 0 4px; }
-  .rs-header p { font-size: 13px; color: var(--rs-ink-soft); margin: 0; text-transform: uppercase; letter-spacing: 1.5px; }
-  .rs-status { margin-top:10px; font-size:11.5px; padding:6px 10px; border-radius:5px; display:inline-block; }
-  .rs-status.connecting { color:#8A6D2F; background:#FBF3E0; border:1px solid #E9D9AE; }
-  .rs-status.online { color:#33633A; background:#E9F2E8; border:1px solid #C9E0C6; }
-  .rs-status.offline { color:#A33333; background:#FBEAEA; border:1px solid #E3B8B8; }
-  .rs-tabs { display: flex; gap: 4px; margin-bottom: 24px; border-bottom: 1px solid var(--rs-line); }
-  .rs-tab { flex: 1; padding: 10px 8px; text-align: center; font-size: 14px; cursor: pointer; color: var(--rs-ink-soft); border-bottom: 2px solid transparent; user-select: none; }
-  .rs-tab.active { color: var(--rs-navy); border-bottom-color: var(--rs-navy); font-weight: 600; }
-  .rs-section-title { font-family: Georgia, serif; font-size: 15px; color: var(--rs-navy); margin: 26px 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--rs-line); }
-  .rs-section-title:first-child { margin-top: 0; }
-  .rs-field { margin-bottom: 14px; }
-  .rs-field label { display: block; font-size: 12.5px; color: var(--rs-ink-soft); margin-bottom: 4px; }
-  .rs-field input[type=text], .rs-field input[type=date], .rs-field textarea {
-    width: 100%; padding: 9px 10px; font-size: 14px; border: 1px solid var(--rs-line);
-    border-radius: 5px; background: #fff; color: var(--rs-ink); font-family: inherit;
-  }
-  .rs-field input:focus, .rs-field textarea:focus { outline: none; border-color: var(--rs-navy); }
-  .rs-field textarea { resize: vertical; min-height: 44px; }
-  .rs-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .rs-discurso-row { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: center; margin-bottom: 10px; }
-  .rs-discurso-num { font-size: 13px; color: var(--rs-gold); font-weight: 600; text-align: center; }
-  .rs-discurso-row input { width:100%; padding:9px 10px; font-size:14px; border:1px solid var(--rs-line); border-radius:5px; background:#fff; color:var(--rs-ink); font-family: inherit; }
-  .rs-btnbar { display: flex; gap: 10px; margin-top: 26px; }
-  .rs-btn { flex: 1; padding: 11px; font-size: 14px; border-radius: 6px; cursor: pointer; border: 1px solid var(--rs-navy); background: #fff; color: var(--rs-navy); text-align: center; }
-  .rs-btn.primary { background: var(--rs-navy); color: #fff; }
-  .rs-btn:hover { opacity: 0.88; }
-  .rs-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-  .rs-msg { font-size: 13px; padding: 8px 10px; border-radius: 5px; margin-top: 10px; display: none; }
-  .rs-msg.ok { background: #E9F2E8; color: #33633A; display: block; }
-  .rs-msg.err { background: #FBEAEA; color: #A33333; display: block; }
-  .rs-hist-empty { text-align: center; color: var(--rs-ink-soft); font-size: 14px; padding: 40px 10px; }
-  .rs-hist-card { border: 1px solid var(--rs-line); border-radius: 8px; margin-bottom: 12px; overflow: hidden; }
-  .rs-hist-head { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; cursor: pointer; background: var(--rs-cream); }
-  .rs-hist-date { font-family: Georgia, serif; font-size: 15px; color: var(--rs-navy); }
-  .rs-hist-sub { font-size: 12px; color: var(--rs-ink-soft); margin-top: 2px; }
-  .rs-hist-chevron { color: var(--rs-gold); font-size: 12px; transition: transform 0.15s; }
-  .rs-hist-body { padding: 4px 14px 14px; display: none; font-size: 13.5px; line-height: 1.7; border-top: 1px solid var(--rs-line); }
-  .rs-hist-body.open { display: block; }
-  .rs-hist-row { display: flex; padding: 4px 0; border-bottom: 1px dashed #EDEAE0; }
-  .rs-hist-row:last-child { border-bottom: none; }
-  .rs-hist-label { width: 46%; color: var(--rs-ink-soft); flex-shrink: 0; }
-  .rs-hist-val { flex: 1; }
-  .rs-hist-actions { display: flex; gap: 8px; margin-top: 12px; }
-  .rs-hist-actions button { font-size: 12.5px; padding: 6px 12px; border-radius: 5px; border: 1px solid var(--rs-line); background: #fff; cursor: pointer; color: var(--rs-ink-soft); }
-  .rs-hist-actions button.danger { border-color: #E3B8B8; color: #A33333; }
-  .rs-loading { text-align: center; color: var(--rs-ink-soft); font-size: 13px; padding: 20px; }
+* {
+    box-sizing: border-box;
+}
+
+html {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: clamp(12px, 3vw, 40px) clamp(10px, 4vw, 30px) 60px;
+
+    font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--rs-ink);
+    background: #fff;
+
+    overflow-x: hidden;
+}
+
+.rs-app {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* ================================
+   CABEÇALHO
+================================ */
+
+.rs-header {
+    width: 100%;
+    text-align: center;
+    padding: 0 0 clamp(16px, 3vw, 24px);
+    border-bottom: 2px solid var(--rs-gold);
+    margin-bottom: clamp(18px, 3vw, 28px);
+}
+
+.rs-header h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 400;
+    font-size: clamp(20px, 3vw, 28px);
+    line-height: 1.25;
+    color: var(--rs-navy);
+    margin: 0 0 5px;
+}
+
+.rs-header p {
+    font-size: clamp(11px, 1.8vw, 13px);
+    color: var(--rs-ink-soft);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.rs-status {
+    margin-top: 10px;
+    font-size: clamp(10px, 1.7vw, 11.5px);
+    padding: 6px 10px;
+    border-radius: 5px;
+    display: inline-block;
+    max-width: 100%;
+}
+
+/* ================================
+   STATUS
+================================ */
+
+.rs-status.connecting {
+    color: #8A6D2F;
+    background: #FBF3E0;
+    border: 1px solid #E9D9AE;
+}
+
+.rs-status.online {
+    color: #33633A;
+    background: #E9F2E8;
+    border: 1px solid #C9E0C6;
+}
+
+.rs-status.offline {
+    color: #A33333;
+    background: #FBEAEA;
+    border: 1px solid #E3B8B8;
+}
+
+/* ================================
+   ABAS
+================================ */
+
+.rs-tabs {
+    display: flex;
+    gap: 4px;
+    width: 100%;
+    margin-bottom: clamp(20px, 4vw, 28px);
+    border-bottom: 1px solid var(--rs-line);
+}
+
+.rs-tab {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 8px;
+    text-align: center;
+    font-size: clamp(13px, 2vw, 14px);
+    cursor: pointer;
+    color: var(--rs-ink-soft);
+    border-bottom: 2px solid transparent;
+    user-select: none;
+}
+
+.rs-tab.active {
+    color: var(--rs-navy);
+    border-bottom-color: var(--rs-navy);
+    font-weight: 600;
+}
+
+/* ================================
+   TÍTULOS DAS SEÇÕES
+================================ */
+
+.rs-section-title {
+    font-family: Georgia, serif;
+    font-size: clamp(14px, 2.2vw, 16px);
+    color: var(--rs-navy);
+    margin: clamp(22px, 4vw, 30px) 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rs-line);
+}
+
+.rs-section-title:first-child {
+    margin-top: 0;
+}
+
+/* ================================
+   CAMPOS
+================================ */
+
+.rs-field {
+    width: 100%;
+    margin-bottom: 14px;
+}
+
+.rs-field label {
+    display: block;
+    font-size: clamp(12px, 1.8vw, 12.5px);
+    color: var(--rs-ink-soft);
+    margin-bottom: 5px;
+}
+
+.rs-field input[type=text],
+.rs-field input[type=date],
+.rs-field textarea {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+
+    padding: 10px 11px;
+    font-size: clamp(13px, 2vw, 14px);
+
+    border: 1px solid var(--rs-line);
+    border-radius: 5px;
+
+    background: #fff;
+    color: var(--rs-ink);
+    font-family: inherit;
+
+    min-height: 40px;
+}
+
+.rs-field input:focus,
+.rs-field textarea:focus {
+    outline: none;
+    border-color: var(--rs-navy);
+}
+
+.rs-field textarea {
+    resize: vertical;
+    min-height: 48px;
+}
+
+/* ================================
+   CAMPOS LADO A LADO
+================================ */
+
+.rs-row2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(8px, 2vw, 14px);
+}
+
+/* ================================
+   DISCURSOS
+================================ */
+
+.rs-discurso-row {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.rs-discurso-num {
+    font-size: 13px;
+    color: var(--rs-gold);
+    font-weight: 600;
+    text-align: center;
+}
+
+.rs-discurso-row input {
+    width: 100%;
+    min-width: 0;
+
+    padding: 10px 11px;
+    font-size: clamp(13px, 2vw, 14px);
+
+    border: 1px solid var(--rs-line);
+    border-radius: 5px;
+
+    background: #fff;
+    color: var(--rs-ink);
+    font-family: inherit;
+}
+
+.rs-discurso-row input:focus {
+    outline: none;
+    border-color: var(--rs-navy);
+}
+
+/* ================================
+   BOTÕES
+================================ */
+
+.rs-btnbar {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    margin-top: 26px;
+}
+
+.rs-btn {
+    flex: 1;
+    min-width: 0;
+
+    padding: 11px 14px;
+    font-size: clamp(13px, 2vw, 14px);
+
+    border-radius: 6px;
+    cursor: pointer;
+
+    border: 1px solid var(--rs-navy);
+    background: #fff;
+    color: var(--rs-navy);
+
+    text-align: center;
+}
+
+.rs-btn.primary {
+    background: var(--rs-navy);
+    color: #fff;
+}
+
+.rs-btn:hover {
+    opacity: 0.88;
+}
+
+.rs-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ================================
+   MENSAGEM
+================================ */
+
+.rs-msg {
+    width: 100%;
+    font-size: 13px;
+    padding: 8px 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: none;
+}
+
+.rs-msg.ok {
+    background: #E9F2E8;
+    color: #33633A;
+    display: block;
+}
+
+.rs-msg.err {
+    background: #FBEAEA;
+    color: #A33333;
+    display: block;
+}
+
+/* ================================
+   HISTÓRICO
+================================ */
+
+.rs-hist-empty {
+    text-align: center;
+    color: var(--rs-ink-soft);
+    font-size: 14px;
+    padding: 40px 10px;
+}
+
+.rs-hist-card {
+    width: 100%;
+    border: 1px solid var(--rs-line);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.rs-hist-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px 14px;
+    cursor: pointer;
+
+    background: var(--rs-cream);
+}
+
+.rs-hist-date {
+    font-family: Georgia, serif;
+    font-size: clamp(14px, 2vw, 15px);
+    color: var(--rs-navy);
+}
+
+.rs-hist-sub {
+    font-size: 12px;
+    color: var(--rs-ink-soft);
+    margin-top: 2px;
+}
+
+.rs-hist-chevron {
+    flex-shrink: 0;
+    color: var(--rs-gold);
+    font-size: 12px;
+    transition: transform 0.15s;
+}
+
+.rs-hist-body {
+    padding: 4px 14px 14px;
+    display: none;
+    font-size: clamp(12.5px, 2vw, 13.5px);
+    line-height: 1.7;
+    border-top: 1px solid var(--rs-line);
+}
+
+.rs-hist-body.open {
+    display: block;
+}
+
+.rs-hist-row {
+    display: flex;
+    gap: 10px;
+    padding: 4px 0;
+    border-bottom: 1px dashed #EDEAE0;
+}
+
+.rs-hist-row:last-child {
+    border-bottom: none;
+}
+
+.rs-hist-label {
+    width: 46%;
+    color: var(--rs-ink-soft);
+    flex-shrink: 0;
+}
+
+.rs-hist-val {
+    flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.rs-hist-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.rs-hist-actions button {
+    font-size: 12.5px;
+    padding: 6px 12px;
+    border-radius: 5px;
+    border: 1px solid var(--rs-line);
+    background: #fff;
+    cursor: pointer;
+    color: var(--rs-ink-soft);
+}
+
+.rs-hist-actions button.danger {
+    border-color: #E3B8B8;
+    color: #A33333;
+}
+
+.rs-loading {
+    text-align: center;
+    color: var(--rs-ink-soft);
+    font-size: 13px;
+    padding: 20px;
+}
+
+.rs-hist-actions .btn-pdf {
+    border-color: var(--rs-gold);
+    color: var(--rs-gold);
+}
+
+.rs-hist-actions .btn-pdf:hover {
+    background: var(--rs-gold-light);
+}
+
+/* ================================
+   TABLETS
+================================ */
+
+@media (max-width: 650px) {
+
+    .rs-app {
+        max-width: 100%;
+    }
+
+    .rs-row2 {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .rs-btnbar {
+        flex-direction: column;
+    }
+
+    .rs-btn {
+        width: 100%;
+    }
+
+    .rs-hist-row {
+        flex-direction: column;
+        gap: 1px;
+        padding: 7px 0;
+    }
+
+    .rs-hist-label {
+        width: 100%;
+        font-size: 11.5px;
+    }
+
+    .rs-hist-val {
+        width: 100%;
+    }
+}
+
+/* ================================
+   CELULAR
+================================ */
+
+@media (max-width: 420px) {
+
+    body {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .rs-header h1 {
+        font-size: 20px;
+    }
+
+    .rs-header p {
+        font-size: 10px;
+        letter-spacing: 1.2px;
+    }
+
+    .rs-status {
+        font-size: 10.5px;
+    }
+
+    .rs-tab {
+        padding: 9px 5px;
+    }
+
+    .rs-section-title {
+        margin-top: 24px;
+    }
+
+    .rs-field input[type=text],
+    .rs-field input[type=date],
+    .rs-field textarea,
+    .rs-discurso-row input {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .rs-hist-head {
+        padding: 11px;
+    }
+
+    .rs-hist-body {
+        padding-left: 11px;
+        padding-right: 11px;
+    }
+}
