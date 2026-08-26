@@ -478,7 +478,7 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
                 '<div class="rs-hist-sub">' +
                 (isTestemunho
                     ? 'Reunião de Testemunho'
-                    : 'Reunião Sacramental' +
+                    : 'Reunião Sacramental') +
                 '</div>' +
                 '</div>' +
                 '<div class="rs-hist-chevron">&#9662;</div>' +
