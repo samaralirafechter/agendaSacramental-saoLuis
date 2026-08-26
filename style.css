@@ -201,6 +201,34 @@ body {
 }
 
 /* ================================
+   ORIENTAÇÃO — CHAMADOS
+================================ */
+
+.rs-orientacao {
+    background: var(--rs-gold-light);
+    border: 1px solid var(--rs-line);
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--rs-ink);
+}
+
+.rs-orientacao strong {
+    color: var(--rs-navy);
+}
+
+.rs-orientacao p {
+    margin: 8px 0 0;
+}
+
+.rs-orientacao p:first-of-type {
+    margin-top: 10px;
+}
+
+/* ================================
    DISCURSOS
 ================================ */
 
