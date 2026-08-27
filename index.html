@@ -21,6 +21,11 @@
     </div>
 
     <div id="rs-view-form">
+
+        <!-- ================================
+             INFORMAÇÕES DA REUNIÃO
+        ================================= -->
+
         <div class="rs-field">
             <label>Data da Reunião</label>
             <input type="date" id="f-date" />
@@ -42,33 +47,123 @@
             </div>
         </div>
 
-        <div class="rs-section-title">Abertura</div>
+        <div class="rs-section-title">Informações da Reunião</div>
+
         <div class="rs-row2">
             <div class="rs-field">
-                <label>Dirigido Por:</label><input type="text" id="f-dirigido" placeholder="Nome" />
+                <label>Dirigido Por:</label>
+                <input
+                        type="text"
+                        id="f-dirigido"
+                        placeholder="Nome"
+                />
             </div>
+
             <div class="rs-field">
-                <label>Presidido Por:</label><input type="text" id="f-presidido" placeholder="Nome" />
+                <label>Presidido Por:</label>
+                <input
+                        type="text"
+                        id="f-presidido"
+                        placeholder="Nome"
+                />
             </div>
         </div>
+
+        <!-- ================================
+             PRELÚDIO
+        ================================= -->
+
+        <div class="rs-section-title">Prelúdio Musical</div>
+
         <div class="rs-field">
-            <label>Pianista</label><input type="text" id="f-pianista" placeholder="Nome" />
+            <label>Pianista</label>
+            <input
+                    type="text"
+                    id="f-pianista"
+                    placeholder="Nome"
+            />
         </div>
+
         <div class="rs-field">
-            <label>Regente:</label><input type="text" id="f-regente" placeholder="Nome" />
+            <label>Regente</label>
+            <input
+                    type="text"
+                    id="f-regente"
+                    placeholder="Nome"
+            />
         </div>
+
+        <!-- ================================
+             ABERTURA
+        ================================= -->
+
+        <div class="rs-section-title">Abertura</div>
+
         <div class="rs-field">
-            <label>Reconhecimentos:</label
-            ><input type="text" id="f-reconhecimentos" placeholder="Autoridades ou visitantes, se houver" />
+            <label>Reconhecimentos:</label>
+            <input
+                    type="text"
+                    id="f-reconhecimentos"
+                    placeholder="Autoridades ou visitantes, se houver"
+            />
         </div>
+
         <div class="rs-field">
-            <label>Anúncios:</label><textarea id="f-anuncios" placeholder="Atividades..."></textarea>
+            <label>Anúncios:</label>
+            <textarea
+                    id="f-anuncios"
+                    placeholder="Atividades..."
+            ></textarea>
         </div>
+
+        <div class="rs-field">
+            <label>Hino de Abertura:</label>
+            <input
+                    type="text"
+                    id="f-hino-abertura"
+                    placeholder="Nº e nome do hino"
+            />
+        </div>
+
+        <div class="rs-field">
+            <label>Oração de Abertura:</label>
+            <input
+                    type="text"
+                    id="f-oracao-abertura"
+                    placeholder="Nome"
+            />
+        </div>
+
+        <!-- ================================
+             ASSUNTOS DA ALA E DA ESTACA
+        ================================= -->
+
+        <div class="rs-section-title">Assuntos da Ala e da Estaca</div>
+
+        <div class="rs-field">
+            <label>Tempo para Estaca:</label>
+            <textarea
+                    id="f-tempo-estaca"
+                    placeholder="Informações ou assuntos da Estaca..."
+            ></textarea>
+        </div>
+
         <div class="rs-field">
             <label>Chamados e Desobrigações:</label>
 
-            <div class="rs-orientacao">
-                <strong>📌 Padrão</strong>
+            <button
+                    type="button"
+                    class="rs-btn-orientacao"
+                    id="btn-orientacao"
+            >
+                📌 Ver padrão para chamados e desobrigações
+            </button>
+
+            <div
+                    class="rs-orientacao"
+                    id="orientacao-chamados"
+                    style="display: none;"
+            >
 
                 <p>
                     <strong>Para chamar:</strong><br>
@@ -84,6 +179,7 @@
                     Os que desejarem manifestar agradecimento por seus
                     serviços prestados podem fazê-lo levantando a mão.”
                 </p>
+
             </div>
 
             <textarea
@@ -91,26 +187,52 @@
                     placeholder="Registre aqui os chamados e desobrigações..."
             ></textarea>
         </div>
+
         <div class="rs-field">
-            <label>Hino de Abertura:</label
-            ><input type="text" id="f-hino-abertura" placeholder="Nº e nome do hino" />
-        </div>
-        <div class="rs-field">
-            <label>Oração de Abertura:</label><input type="text" id="f-oracao-abertura" placeholder="Nome" />
-        </div>
-        <div class="rs-field">
-            <label>Hino sacramental:</label
-            ><input type="text" id="f-hino-sacramental" placeholder="Nº e nome do hino" />
+            <label>Abençoar e Dar Nome a Crianças:</label>
+            <textarea
+                    id="f-criancas"
+                    placeholder="Nome da criança e informações, se houver..."
+            ></textarea>
         </div>
 
+        <div class="rs-field">
+            <label>Confirmação de Novos Conversos:</label>
+            <textarea
+                    id="f-confirmacoes"
+                    placeholder="Nome dos membros confirmados, se houver..."
+            ></textarea>
+        </div>
+
+        <!-- ================================
+             SACRAMENTO
+        ================================= -->
+
+        <div class="rs-section-title">Sacramento</div>
+
+        <div class="rs-field">
+            <label>Hino Sacramental:</label>
+            <input
+                    type="text"
+                    id="f-hino-sacramental"
+                    placeholder="Nº e nome do hino"
+            />
+        </div>
+
+        <!-- ================================
+             MENSAGENS / TESTEMUNHOS
+        ================================= -->
+
         <div id="bloco-discursos">
-            <div class="rs-section-title">Discursos</div>
+
+            <div class="rs-section-title">Mensagens do Evangelho</div>
 
             <div id="f-discursos"></div>
 
         </div>
 
         <div id="bloco-testemunhos" style="display: none;">
+
             <div class="rs-section-title">Testemunhos</div>
 
             <div class="rs-field">
@@ -120,23 +242,49 @@
                         placeholder="Digite os nomes dos membros que prestaram testemunho, um por linha..."
                 ></textarea>
             </div>
+
         </div>
+
+        <!-- ================================
+             ENCERRAMENTO
+        ================================= -->
 
         <div class="rs-section-title">Encerramento</div>
+
         <div class="rs-field">
-            <label>Hino de Encerramento:</label
-            ><input type="text" id="f-hino-encerramento" placeholder="Nº e nome do hino" />
-        </div>
-        <div class="rs-field">
-            <label>Oração de Encerramento:</label
-            ><input type="text" id="f-oracao-encerramento" placeholder="Nome" />
+            <label>Hino de Encerramento:</label>
+            <input
+                    type="text"
+                    id="f-hino-encerramento"
+                    placeholder="Nº e nome do hino"
+            />
         </div>
 
-        <div class="rs-btnbar">
-            <button class="rs-btn" id="btn-clear">Limpar formulário</button>
-            <button class="rs-btn primary" id="btn-save">Salvar reunião</button>
+        <div class="rs-field">
+            <label>Oração de Encerramento:</label>
+            <input
+                    type="text"
+                    id="f-oracao-encerramento"
+                    placeholder="Nome"
+            />
         </div>
+
+        <!-- ================================
+             BOTÕES
+        ================================= -->
+
+        <div class="rs-btnbar">
+            <button class="rs-btn" id="btn-clear">
+                Limpar formulário
+            </button>
+
+            <button class="rs-btn primary" id="btn-save">
+                Salvar reunião
+            </button>
+        </div>
+
         <div class="rs-msg" id="f-msg"></div>
+
     </div>
 
     <div id="rs-view-history" style="display: none">

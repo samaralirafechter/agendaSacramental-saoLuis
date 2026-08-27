@@ -136,20 +136,33 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
             date: document.getElementById('f-date').value,
             tipoReuniao: tipo,
 
-            pianista: document.getElementById('f-pianista').value.trim(),
+            // INFORMAÇÕES DA REUNIÃO
             dirigidoPor: document.getElementById('f-dirigido').value.trim(),
             presididoPor: document.getElementById('f-presidido').value.trim(),
+
+            // PRELÚDIO
+            pianista: document.getElementById('f-pianista').value.trim(),
             regente: document.getElementById('f-regente').value.trim(),
+
+            // ABERTURA
             reconhecimentos: document.getElementById('f-reconhecimentos').value.trim(),
             anuncios: document.getElementById('f-anuncios').value.trim(),
-            chamados: document.getElementById('f-chamados').value.trim(),
-
             hinoAbertura: document.getElementById('f-hino-abertura').value.trim(),
             oracaoAbertura: document.getElementById('f-oracao-abertura').value.trim(),
+
+            // ASSUNTOS DA ALA E DA ESTACA
+            tempoEstaca: document.getElementById('f-tempo-estaca').value.trim(),
+            chamados: document.getElementById('f-chamados').value.trim(),
+            criancas: document.getElementById('f-criancas').value.trim(),
+            confirmacoes: document.getElementById('f-confirmacoes').value.trim(),
+
+            // SACRAMENTO
             hinoSacramental: document.getElementById('f-hino-sacramental').value.trim(),
 
+            // MENSAGENS / TESTEMUNHOS
             discursos: tipo === 'normal'
-                ? Array.from(document.querySelectorAll('.f-discurso')).map(el => el.value.trim())
+                ? Array.from(document.querySelectorAll('.f-discurso'))
+                    .map(el => el.value.trim())
                 : [],
 
             hinoIntermediario: tipo === 'normal'
@@ -160,6 +173,7 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
                 ? document.getElementById('f-testemunhos').value.trim()
                 : '',
 
+            // ENCERRAMENTO
             hinoEncerramento: document.getElementById('f-hino-encerramento').value.trim(),
             oracaoEncerramento: document.getElementById('f-oracao-encerramento').value.trim()
         };
@@ -176,18 +190,51 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
 
         atualizarTipoReuniao();
 
-        document.getElementById('f-pianista').value = entry.pianista || '';
-        document.getElementById('f-dirigido').value = entry.dirigidoPor || '';
-        document.getElementById('f-presidido').value = entry.presididoPor || '';
-        document.getElementById('f-regente').value = entry.regente || '';
-        document.getElementById('f-reconhecimentos').value = entry.reconhecimentos || '';
-        document.getElementById('f-anuncios').value = entry.anuncios || '';
-        document.getElementById('f-chamados').value = entry.chamados || '';
+        // INFORMAÇÕES DA REUNIÃO
+        document.getElementById('f-dirigido').value =
+            entry.dirigidoPor || '';
 
-        document.getElementById('f-hino-abertura').value = entry.hinoAbertura || '';
-        document.getElementById('f-oracao-abertura').value = entry.oracaoAbertura || '';
-        document.getElementById('f-hino-sacramental').value = entry.hinoSacramental || '';
+        document.getElementById('f-presidido').value =
+            entry.presididoPor || '';
 
+        // PRELÚDIO
+        document.getElementById('f-pianista').value =
+            entry.pianista || '';
+
+        document.getElementById('f-regente').value =
+            entry.regente || '';
+
+        // ABERTURA
+        document.getElementById('f-reconhecimentos').value =
+            entry.reconhecimentos || '';
+
+        document.getElementById('f-anuncios').value =
+            entry.anuncios || '';
+
+        document.getElementById('f-hino-abertura').value =
+            entry.hinoAbertura || '';
+
+        document.getElementById('f-oracao-abertura').value =
+            entry.oracaoAbertura || '';
+
+        // ASSUNTOS DA ALA E DA ESTACA
+        document.getElementById('f-tempo-estaca').value =
+            entry.tempoEstaca || '';
+
+        document.getElementById('f-chamados').value =
+            entry.chamados || '';
+
+        document.getElementById('f-criancas').value =
+            entry.criancas || '';
+
+        document.getElementById('f-confirmacoes').value =
+            entry.confirmacoes || '';
+
+        // SACRAMENTO
+        document.getElementById('f-hino-sacramental').value =
+            entry.hinoSacramental || '';
+
+        // MENSAGENS
         const discursoEls = document.querySelectorAll('.f-discurso');
 
         discursoEls.forEach((el, i) => {
@@ -197,9 +244,11 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
         document.getElementById('f-hino-intermediario').value =
             entry.hinoIntermediario || '';
 
+        // TESTEMUNHOS
         document.getElementById('f-testemunhos').value =
             entry.testemunhos || '';
 
+        // ENCERRAMENTO
         document.getElementById('f-hino-encerramento').value =
             entry.hinoEncerramento || '';
 
@@ -228,6 +277,25 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
         const [y, m, d] = iso.split('-');
         return d + '/' + m + '/' + y;
     }
+
+    // ================================
+    // ORIENTAÇÃO — CHAMADOS E DESOBRIGAÇÕES
+    // ================================
+
+    const btnOrientacao = document.getElementById('btn-orientacao');
+    const orientacaoChamados = document.getElementById('orientacao-chamados');
+
+    btnOrientacao.addEventListener('click', () => {
+        const aberta = orientacaoChamados.style.display !== 'none';
+
+        if (aberta) {
+            orientacaoChamados.style.display = 'none';
+            btnOrientacao.textContent = '📌 Ver padrão para chamados e desobrigações';
+        } else {
+            orientacaoChamados.style.display = '';
+            btnOrientacao.textContent = '📌 Ocultar padrão';
+        }
+    });
 
     document.getElementById('btn-save').addEventListener('click', async () => {
         const entry = collectForm();
@@ -330,13 +398,6 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
             y += linhas.length * 5 + 3;
         }
 
-        function verificarPagina() {
-            if (y > 270) {
-                pdf.addPage();
-                y = 20;
-            }
-        }
-
         // ================================
         // CABEÇALHO
         // ================================
@@ -383,7 +444,26 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
 
         y += 8;
 
+        // ================================
+        // INFORMAÇÕES DA REUNIÃO
+        // ================================
+
+        secao("Informações da Reunião");
+
         campo("Data", formatDate(entry.date));
+        campo("Dirigido por", entry.dirigidoPor);
+        campo("Presidido por", entry.presididoPor);
+
+
+        // ================================
+        // PRELÚDIO MUSICAL
+        // ================================
+
+        secao("Prelúdio Musical");
+
+        campo("Pianista", entry.pianista);
+        campo("Regente", entry.regente);
+
 
         // ================================
         // ABERTURA
@@ -391,38 +471,79 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
 
         secao("Abertura");
 
-        campo("Dirigido por", entry.dirigidoPor);
-        campo("Presidido por", entry.presididoPor);
-        campo("Pianista", entry.pianista);
-        campo("Regente", entry.regente);
         campo("Reconhecimentos", entry.reconhecimentos);
         campo("Anúncios", entry.anuncios);
-        campo("Chamados e Desobrigações", entry.chamados);
         campo("Hino de abertura", entry.hinoAbertura);
         campo("Oração de abertura", entry.oracaoAbertura);
-        campo("Hino sacramental", entry.hinoSacramental);
+
 
         // ================================
-        // DISCURSOS / TESTEMUNHOS
+        // ASSUNTOS DA ALA E DA ESTACA
+        // ================================
+
+        secao("Assuntos da Ala e da Estaca");
+
+        campo("Tempo para Estaca", entry.tempoEstaca);
+        campo("Chamados e Desobrigações", entry.chamados);
+        campo(
+            "Abençoar e Dar Nome a Crianças",
+            entry.criancas
+        );
+        campo(
+            "Confirmação de Novos Conversos",
+            entry.confirmacoes
+        );
+
+
+        // ================================
+        // SACRAMENTO
+        // ================================
+
+        secao("Sacramento");
+
+        campo("Hino sacramental", entry.hinoSacramental);
+
+
+        // ================================
+        // MENSAGENS / TESTEMUNHOS
         // ================================
 
         if (isTestemunho) {
 
             secao("Testemunhos");
 
-            campo("Membros que prestaram testemunho", entry.testemunhos);
+            campo(
+                "Membros que prestaram testemunho",
+                entry.testemunhos
+            );
 
         } else {
 
-            secao("Discursos");
+            secao("Mensagens do Evangelho");
 
             const discursos = entry.discursos || [];
 
-            campo("Primeiro discursante", discursos[0]);
-            campo("Segundo discursante", discursos[1]);
-            campo("Hino intermediário", entry.hinoIntermediario);
-            campo("Terceiro discursante", discursos[2]);
+            campo(
+                "Primeiro discursante",
+                discursos[0]
+            );
+
+            campo(
+                "Segundo discursante",
+                discursos[1]
+            );
+
+            campo(
+                "Hino intermediário",
+                entry.hinoIntermediario
+            );
+
+            campo(
+                "Terceiro discursante",
+                discursos[2]
+            );
         }
+
 
         // ================================
         // ENCERRAMENTO
@@ -430,8 +551,15 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
 
         secao("Encerramento");
 
-        campo("Hino de encerramento", entry.hinoEncerramento);
-        campo("Oração de encerramento", entry.oracaoEncerramento);
+        campo(
+            "Hino de encerramento",
+            entry.hinoEncerramento
+        );
+
+        campo(
+            "Oração de encerramento",
+            entry.oracaoEncerramento
+        );
 
         // ================================
         // RODAPÉ
@@ -470,7 +598,6 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
             const card = document.createElement('div');
             card.className = 'rs-hist-card';
             const isTestemunho = entry.tipoReuniao === 'testemunho';
-            const discursosCount = (entry.discursos || []).filter(Boolean).length;
             card.innerHTML =
                 '<div class="rs-hist-head">' +
                 '<div>' +
@@ -486,29 +613,73 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
 
                 '<div class="rs-hist-body">' +
 
-                fieldRow('Tipo de reunião',
-                    isTestemunho ? 'Reunião de Testemunho' : 'Reunião Sacramental') +
+                // INFORMAÇÕES
+                fieldRow(
+                    'Tipo de reunião',
+                    isTestemunho
+                        ? 'Reunião de Testemunho'
+                        : 'Reunião Sacramental'
+                ) +
 
-                fieldRow('Prelúdio musical', entry.pianista) +
+                fieldRow('Data', formatDate(entry.date)) +
                 fieldRow('Dirigido por', entry.dirigidoPor) +
                 fieldRow('Presidido por', entry.presididoPor) +
+
+                // PRELÚDIO
+                fieldRow('Pianista', entry.pianista) +
                 fieldRow('Regente', entry.regente) +
+
+                // ABERTURA
                 fieldRow('Reconhecimentos', entry.reconhecimentos) +
                 fieldRow('Anúncios', entry.anuncios) +
-                fieldRow('Chamados e Desobrigações', entry.chamados) +
                 fieldRow('Hino de abertura', entry.hinoAbertura) +
                 fieldRow('Oração de abertura', entry.oracaoAbertura) +
+
+                // ASSUNTOS DA ALA E DA ESTACA
+                fieldRow('Tempo para Estaca', entry.tempoEstaca) +
+                fieldRow('Chamados e Desobrigações', entry.chamados) +
+                fieldRow(
+                    'Abençoar e Dar Nome a Crianças',
+                    entry.criancas
+                ) +
+                fieldRow(
+                    'Confirmação de Novos Conversos',
+                    entry.confirmacoes
+                ) +
+
+                // SACRAMENTO
                 fieldRow('Hino sacramental', entry.hinoSacramental) +
 
+                // MENSAGENS / TESTEMUNHOS
                 (isTestemunho
                     ? fieldRow('Testemunhos', entry.testemunhos)
-                    : fieldRow('Primeiro discursante', entry.discursos && entry.discursos[0]) +
-                      fieldRow('Segundo discursante', entry.discursos && entry.discursos[1]) +
-                      fieldRow('Hino intermediário', entry.hinoIntermediario) +
-                      fieldRow('Terceiro discursante', entry.discursos && entry.discursos[2])) +
+                    : fieldRow(
+                          'Primeiro discursante',
+                          entry.discursos && entry.discursos[0]
+                      ) +
+                      fieldRow(
+                          'Segundo discursante',
+                          entry.discursos && entry.discursos[1]
+                      ) +
+                      fieldRow(
+                          'Hino intermediário',
+                          entry.hinoIntermediario
+                      ) +
+                      fieldRow(
+                          'Terceiro discursante',
+                          entry.discursos && entry.discursos[2]
+                      )) +
 
-                fieldRow('Hino de encerramento', entry.hinoEncerramento) +
-                fieldRow('Oração de encerramento', entry.oracaoEncerramento) +
+                // ENCERRAMENTO
+                fieldRow(
+                    'Hino de encerramento',
+                    entry.hinoEncerramento
+                ) +
+
+                fieldRow(
+                    'Oração de encerramento',
+                    entry.oracaoEncerramento
+                ) +
 
                 '<div class="rs-hist-actions">' +
                 '<button class="btn-edit">Editar</button>' +

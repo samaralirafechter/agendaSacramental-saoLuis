@@ -229,6 +229,52 @@ body {
 }
 
 /* ================================
+   ORIENTAÇÃO — CHAMADOS
+================================ */
+
+.rs-btn-orientacao {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 9px 11px;
+
+    border: 1px solid var(--rs-line);
+    border-radius: 5px;
+
+    background: var(--rs-cream);
+    color: var(--rs-navy);
+
+    font-family: inherit;
+    font-size: 12.5px;
+    text-align: left;
+
+    cursor: pointer;
+}
+
+.rs-btn-orientacao:hover {
+    border-color: var(--rs-gold);
+}
+
+.rs-orientacao {
+    margin-bottom: 10px;
+    padding: 11px 12px;
+
+    background: var(--rs-gold-light);
+    border: 1px solid var(--rs-line);
+    border-radius: 5px;
+
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+.rs-orientacao p {
+    margin: 0;
+}
+
+.rs-orientacao p + p {
+    margin-top: 12px;
+}
+
+/* ================================
    DISCURSOS
 ================================ */
 
