@@ -346,85 +346,357 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
     }
 
     function gerarPDF(entry) {
+
         const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF();
 
-        const margem = 20;
-        const largura = 170;
-        let y = 20;
+        const pdf = new jsPDF({
+            orientation: "portrait",
+            unit: "mm",
+            format: "a4"
+        });
 
-        function secao(texto) {
-            y += 5;
-            pdf.setFont("helvetica", "bold");
-            pdf.setFontSize(12);
-            pdf.setTextColor(31, 58, 95);
-            pdf.text(texto, margem, y);
-            y += 7;
+        const margem = 18;
+        const largura = 174;
+        const alturaPagina = 297;
+
+        // Área segura para o conteúdo.
+        // O rodapé ficará abaixo desta área.
+        const inicioConteudo = 17;
+        const limiteConteudo = 300;
+
+        const rodapeY = 290;
+
+        const isTestemunho =
+            entry.tipoReuniao === "testemunho";
+
+        // ============================================================
+        // MONTAR LISTA DE CONTEÚDO
+        // ============================================================
+
+        const blocos = [];
+
+        function adicionarSecao(texto) {
+            blocos.push({
+                tipo: "secao",
+                texto: texto
+            });
         }
 
-        function campo(label, valor) {
+        function adicionarCampo(label, valor) {
             if (!valor) return;
 
-            const linhas = pdf.splitTextToSize(String(valor), largura);
-            const alturaNecessaria = 5 + (linhas.length * 5) + 8;
-
-            if (y + alturaNecessaria > 270) {
-                pdf.addPage();
-                y = 20;
-            }
-
-            pdf.setFont("helvetica", "bold");
-            pdf.setFontSize(10);
-            pdf.setTextColor(107, 104, 95);
-
-            pdf.text(label, margem, y);
-
-            y += 5;
-
-            pdf.setFont("helvetica", "normal");
-            pdf.setFontSize(11);
-            pdf.setTextColor(42, 42, 40);
-
-            pdf.text(linhas, margem, y);
-
-            y += linhas.length * 5 + 3;
+            blocos.push({
+                tipo: "campo",
+                label: label,
+                valor: String(valor)
+            });
         }
 
-        // ================================
+        // ============================================================
+        // CONTEÚDO — MESMA ORDEM DA AGENDA
+        // ============================================================
+
+        adicionarSecao("Informações da Reunião");
+
+        adicionarCampo(
+            "Data",
+            formatDate(entry.date)
+        );
+
+        adicionarCampo(
+            "Dirigido por",
+            entry.dirigidoPor
+        );
+
+        adicionarCampo(
+            "Presidido por",
+            entry.presididoPor
+        );
+
+        adicionarSecao("Música");
+
+        adicionarCampo(
+            "Pianista",
+            entry.pianista
+        );
+
+        adicionarCampo(
+            "Regente",
+            entry.regente
+        );
+
+        adicionarSecao("Abertura");
+
+        adicionarCampo(
+            "Reconhecimentos",
+            entry.reconhecimentos
+        );
+
+        adicionarCampo(
+            "Anúncios",
+            entry.anuncios
+        );
+
+        adicionarCampo(
+            "Hino de abertura",
+            entry.hinoAbertura
+        );
+
+        adicionarCampo(
+            "Oração de abertura",
+            entry.oracaoAbertura
+        );
+
+        adicionarSecao("Assuntos da Ala e da Estaca");
+
+        adicionarCampo(
+            "Chamados e Desobrigações",
+            entry.chamados
+        );
+
+        adicionarCampo(
+            "Abençoar e Dar Nome a Crianças",
+            entry.criancas
+        );
+
+        adicionarCampo(
+            "Confirmação de Novos Conversos",
+            entry.confirmacoes
+        );
+
+        adicionarCampo(
+            "Tempo para Estaca",
+            entry.tempoEstaca
+        );
+
+        adicionarSecao("Sacramento");
+
+        adicionarCampo(
+            "Hino sacramental",
+            entry.hinoSacramental
+        );
+
+        if (isTestemunho) {
+
+            adicionarSecao("Testemunhos");
+
+            adicionarCampo(
+                "Membros que prestaram testemunho",
+                entry.testemunhos
+            );
+
+        } else {
+
+            adicionarSecao("Mensagens do Evangelho");
+
+            const discursos =
+                entry.discursos || [];
+
+            adicionarCampo(
+                "Primeiro discursante",
+                discursos[0]
+            );
+
+            adicionarCampo(
+                "Segundo discursante",
+                discursos[1]
+            );
+
+            adicionarCampo(
+                "Hino intermediário",
+                entry.hinoIntermediario
+            );
+
+            adicionarCampo(
+                "Terceiro discursante",
+                discursos[2]
+            );
+        }
+
+        adicionarSecao("Encerramento");
+
+        adicionarCampo(
+            "Hino de encerramento",
+            entry.hinoEncerramento
+        );
+
+        adicionarCampo(
+            "Oração de encerramento",
+            entry.oracaoEncerramento
+        );
+
+        // ============================================================
+        // CALCULAR ALTURA NECESSÁRIA
+        // ============================================================
+
+        function calcularAltura(escala) {
+
+            let altura = 0;
+
+            // Cabeçalho
+            altura += 7;
+            altura += 6;
+            altura += 6;
+            altura += 8;
+            altura += 7;
+
+            blocos.forEach(bloco => {
+
+                if (bloco.tipo === "secao") {
+
+                    altura += 4 * escala;
+                    altura += 6 * escala;
+
+                } else {
+
+                    pdf.setFont(
+                        "helvetica",
+                        "normal"
+                    );
+
+                    pdf.setFontSize(
+                        9.5 * escala
+                    );
+
+                    const linhas =
+                        pdf.splitTextToSize(
+                            bloco.valor,
+                            largura
+                        );
+
+                    altura +=
+                        3.7 * escala +
+                        linhas.length * 3.9 * escala +
+                        2.2 * escala;
+                }
+            });
+
+            return altura;
+        }
+
+        // ============================================================
+        // ENCONTRAR O MELHOR TAMANHO
+        // ============================================================
+
+        let escala = 1;
+
+        const escalas = [
+            1,
+            0.95,
+            0.90,
+            0.85,
+            0.80,
+            0.75,
+            0.70,
+            0.65
+        ];
+
+        for (let i = 0; i < escalas.length; i++) {
+
+            const teste =
+                calcularAltura(escalas[i]);
+
+            if (teste <= limiteConteudo - inicioConteudo) {
+                escala = escalas[i];
+                break;
+            }
+
+            // Caso ainda não caiba,
+            // usa a menor escala disponível.
+            escala = escalas[escalas.length - 1];
+        }
+
+        // ============================================================
+        // POSIÇÃO INICIAL
+        // ============================================================
+
+        let y = inicioConteudo;
+
+        // ============================================================
         // CABEÇALHO
-        // ================================
+        // ============================================================
 
-        pdf.setFont("helvetica", "bold");
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
         pdf.setFontSize(18);
-        pdf.setTextColor(31, 58, 95);
 
-        pdf.text("Ala Jd. São Luís · Santo Amaro", margem, y);
-
-        y += 8;
-
-        pdf.setFont("helvetica", "normal");
-        pdf.setFontSize(12);
-        pdf.setTextColor(107, 104, 95);
-
-        const isTestemunho = entry.tipoReuniao === 'testemunho';
+        pdf.setTextColor(
+            31,
+            58,
+            95
+        );
 
         pdf.text(
-            isTestemunho ? "Reunião de Testemunho" : "Reunião Sacramental",
+            "Ala Jd. São Luís · Santo Amaro",
             margem,
             y
         );
 
         y += 7;
 
-        pdf.setDrawColor(184, 146, 63);
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.setFontSize(11);
+
+        pdf.setTextColor(
+            170,
+            170,
+            170
+        );
+
+        pdf.text(
+            isTestemunho
+                ? "Reunião de Testemunho"
+                : "Reunião Sacramental",
+            margem,
+            y
+        );
+
+        y += 6;
+
+        // ============================================================
+        // LINHA DOURADA
+        // ============================================================
+
+        pdf.setDrawColor(
+            184,
+            146,
+            63
+        );
+
         pdf.setLineWidth(0.7);
-        pdf.line(margem, y, 190, y);
 
-        y += 10;
+        pdf.line(
+            margem,
+            y,
+            192,
+            y
+        );
 
-        pdf.setFont("helvetica", "bold");
+        y += 8;
+
+        // ============================================================
+        // TÍTULO
+        // ============================================================
+
+        pdf.setFont(
+            "helvetica",
+            "bold"
+        );
+
         pdf.setFontSize(14);
-        pdf.setTextColor(31, 58, 95);
+
+        pdf.setTextColor(
+            31,
+            58,
+            95
+        );
 
         pdf.text(
             isTestemunho
@@ -434,152 +706,179 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
             y
         );
 
-        y += 8;
+        y += 7;
 
-        // ================================
-        // INFORMAÇÕES DA REUNIÃO
-        // ================================
+        // ============================================================
+        // RENDERIZAR SEÇÕES
+        // ============================================================
 
-        secao("Informações da Reunião");
+        function renderSecao(texto) {
 
-        campo("Data", formatDate(entry.date));
-        campo("Dirigido por", entry.dirigidoPor);
-        campo("Presidido por", entry.presididoPor);
+            y += 4 * escala;
 
-
-        // ================================
-        // MUSICAL
-        // ================================
-
-        secao("Música");
-
-        campo("Pianista", entry.pianista);
-        campo("Regente", entry.regente);
-
-
-        // ================================
-        // ABERTURA
-        // ================================
-
-        secao("Abertura");
-
-        campo("Reconhecimentos", entry.reconhecimentos);
-        campo("Anúncios", entry.anuncios);
-        campo("Hino de abertura", entry.hinoAbertura);
-        campo("Oração de abertura", entry.oracaoAbertura);
-
-
-        // ================================
-        // ASSUNTOS DA ALA E DA ESTACA
-        // ================================
-
-        secao("Assuntos da Ala e da Estaca");
-
-        campo("Chamados e Desobrigações", entry.chamados);
-        campo(
-            "Abençoar e Dar Nome a Crianças",
-            entry.criancas
-        );
-        campo(
-            "Confirmação de Novos Conversos",
-            entry.confirmacoes
-        );
-        campo("Tempo para Estaca", entry.tempoEstaca);
-
-        // ================================
-        // SACRAMENTO
-        // ================================
-
-        secao("Sacramento");
-
-        campo("Hino sacramental", entry.hinoSacramental);
-
-
-        // ================================
-        // MENSAGENS / TESTEMUNHOS
-        // ================================
-
-        if (isTestemunho) {
-
-            secao("Testemunhos");
-
-            campo(
-                "Membros que prestaram testemunho",
-                entry.testemunhos
+            pdf.setFont(
+                "helvetica",
+                "bold"
             );
 
-        } else {
-
-            secao("Mensagens do Evangelho");
-
-            const discursos = entry.discursos || [];
-
-            campo(
-                "Primeiro discursante",
-                discursos[0]
+            pdf.setFontSize(
+                12 * escala
             );
 
-            campo(
-                "Segundo discursante",
-                discursos[1]
+            pdf.setTextColor(
+                31,
+                58,
+                95
             );
-
-            campo(
-                "Hino intermediário",
-                entry.hinoIntermediario
-            );
-
-            campo(
-                "Terceiro discursante",
-                discursos[2]
-            );
-        }
-
-
-        // ================================
-        // ENCERRAMENTO
-        // ================================
-
-        secao("Encerramento");
-
-        campo(
-            "Hino de encerramento",
-            entry.hinoEncerramento
-        );
-
-        campo(
-            "Oração de encerramento",
-            entry.oracaoEncerramento
-        );
-
-        // ================================
-        // RODAPÉ
-        // ================================
-
-        const totalPaginas = pdf.internal.getNumberOfPages();
-
-        for (let i = 1; i <= totalPaginas; i++) {
-            pdf.setPage(i);
-
-            pdf.setFont("helvetica", "normal");
-            pdf.setFontSize(8);
-            pdf.setTextColor(107, 104, 95);
 
             pdf.text(
-                "Agenda Sacramental · Ala Jd. São Luís · Santo Amaro",
+                texto,
                 margem,
-                287
+                y
+            );
+
+            y += 6 * escala;
+        }
+
+        // ============================================================
+        // RENDERIZAR CAMPOS
+        // ============================================================
+
+        function renderCampo(label, valor) {
+
+            if (!valor) return;
+
+            pdf.setFont(
+                "helvetica",
+                "normal"
+            );
+
+            pdf.setFontSize(
+                9.5 * escala
+            );
+
+            const linhas =
+                pdf.splitTextToSize(
+                    String(valor),
+                    largura
+                );
+
+            pdf.setFont(
+                "helvetica",
+                "bold"
+            );
+
+            pdf.setFontSize(
+                8.5 * escala
+            );
+
+            pdf.setTextColor(
+                107,
+                104,
+                95
             );
 
             pdf.text(
-                "Página " + i + " de " + totalPaginas,
-                190,
-                287,
-                { align: "right" }
+                label,
+                margem,
+                y
             );
+
+            y += 3.7 * escala;
+
+            pdf.setFont(
+                "helvetica",
+                "normal"
+            );
+
+            pdf.setFontSize(
+                9.5 * escala
+            );
+
+            pdf.setTextColor(
+                20,
+                20,
+                20
+            );
+
+            pdf.text(
+                linhas,
+                margem,
+                y
+            );
+
+            y +=
+                linhas.length *
+                3.9 *
+                escala;
+
+            y +=
+                2.2 *
+                escala;
         }
 
-        pdf.save("ata-reuniao-sacramental-" + entry.date + ".pdf");
+        // ============================================================
+        // RENDERIZAR TODO O CONTEÚDO
+        // ============================================================
+
+        blocos.forEach(bloco => {
+
+            if (bloco.tipo === "secao") {
+
+                renderSecao(
+                    bloco.texto
+                );
+
+            } else {
+
+                renderCampo(
+                    bloco.label,
+                    bloco.valor
+                );
+            }
+        });
+
+        // ============================================================
+        // RODAPÉ
+        // ============================================================
+
+        pdf.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        pdf.setFontSize(8);
+
+        pdf.setTextColor(
+            107,
+            104,
+            95
+        );
+
+        pdf.text(
+            "Agenda Sacramental · Ala Jd. São Luís · Santo Amaro",
+            margem,
+            rodapeY
+        );
+
+        pdf.text(
+            "Página 1 de 1",
+            192,
+            rodapeY,
+            {
+                align: "right"
+            }
+        );
+
+        // ============================================================
+        // SALVAR
+        // ============================================================
+
+        pdf.save(
+            "ata-reuniao-sacramental-" +
+            entry.date +
+            ".pdf"
+        );
     }
 
     function renderHistory(entries) {
