@@ -448,10 +448,10 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
 
 
         // ================================
-        // PRELÚDIO MUSICAL
+        // MUSICAL
         // ================================
 
-        secao("Prelúdio Musical");
+        secao("Música");
 
         campo("Pianista", entry.pianista);
         campo("Regente", entry.regente);
