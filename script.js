@@ -151,10 +151,10 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
             oracaoAbertura: document.getElementById('f-oracao-abertura').value.trim(),
 
             // ASSUNTOS DA ALA E DA ESTACA
-            tempoEstaca: document.getElementById('f-tempo-estaca').value.trim(),
             chamados: document.getElementById('f-chamados').value.trim(),
             criancas: document.getElementById('f-criancas').value.trim(),
             confirmacoes: document.getElementById('f-confirmacoes').value.trim(),
+            tempoEstaca: document.getElementById('f-tempo-estaca').value.trim(),
 
             // SACRAMENTO
             hinoSacramental: document.getElementById('f-hino-sacramental').value.trim(),
@@ -193,42 +193,34 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
         // INFORMAÇÕES DA REUNIÃO
         document.getElementById('f-dirigido').value =
             entry.dirigidoPor || '';
-
         document.getElementById('f-presidido').value =
             entry.presididoPor || '';
 
         // PRELÚDIO
         document.getElementById('f-pianista').value =
             entry.pianista || '';
-
         document.getElementById('f-regente').value =
             entry.regente || '';
 
         // ABERTURA
         document.getElementById('f-reconhecimentos').value =
             entry.reconhecimentos || '';
-
         document.getElementById('f-anuncios').value =
             entry.anuncios || '';
-
         document.getElementById('f-hino-abertura').value =
             entry.hinoAbertura || '';
-
         document.getElementById('f-oracao-abertura').value =
             entry.oracaoAbertura || '';
 
         // ASSUNTOS DA ALA E DA ESTACA
-        document.getElementById('f-tempo-estaca').value =
-            entry.tempoEstaca || '';
-
         document.getElementById('f-chamados').value =
             entry.chamados || '';
-
         document.getElementById('f-criancas').value =
             entry.criancas || '';
-
         document.getElementById('f-confirmacoes').value =
             entry.confirmacoes || '';
+        document.getElementById('f-tempo-estaca').value =
+            entry.tempoEstaca || '';
 
         // SACRAMENTO
         document.getElementById('f-hino-sacramental').value =
@@ -483,7 +475,6 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
 
         secao("Assuntos da Ala e da Estaca");
 
-        campo("Tempo para Estaca", entry.tempoEstaca);
         campo("Chamados e Desobrigações", entry.chamados);
         campo(
             "Abençoar e Dar Nome a Crianças",
@@ -493,7 +484,7 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
             "Confirmação de Novos Conversos",
             entry.confirmacoes
         );
-
+        campo("Tempo para Estaca", entry.tempoEstaca);
 
         // ================================
         // SACRAMENTO
@@ -636,7 +627,6 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
                 fieldRow('Oração de abertura', entry.oracaoAbertura) +
 
                 // ASSUNTOS DA ALA E DA ESTACA
-                fieldRow('Tempo para Estaca', entry.tempoEstaca) +
                 fieldRow('Chamados e Desobrigações', entry.chamados) +
                 fieldRow(
                     'Abençoar e Dar Nome a Crianças',
@@ -646,6 +636,7 @@ getDocs(query(collection(db, COLLECTION), limit(1)))
                     'Confirmação de Novos Conversos',
                     entry.confirmacoes
                 ) +
+                fieldRow('Tempo para Estaca', entry.tempoEstaca) +
 
                 // SACRAMENTO
                 fieldRow('Hino sacramental', entry.hinoSacramental) +
